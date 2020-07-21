@@ -8,19 +8,41 @@ class LetterPaginator extends React.Component{
         start:null,
         totalPages:null,
         skip:null,
-        active : null,
+        active : 1,
         word: null,
         occurenceNo :null,
         char:null
     }
     componentDidMount(){
         this.setState({
-            active:1,
             totalPages:this.props.totalPages || 100,
             skip:this.props.skip || 10,
             word: this.props.word,
             start: this.props.totalPages > 0 ? 1 : 1,
             end : ((this.props.totalPages || 10) > (this.props.skip || 5) ?  this.props.skip : this.props.totalPages) || 10,
+            occurenceNo : this.props.occurenceNo || 1,
+            char : this.props.repeatingChar || this.props.word[0]
+        })
+    }
+    componentDidUpdate(prevProps,prevState){
+        if(this.props.totalPages!==prevProps.totalPages ||this.props.skip!==prevProps.skip || this.props.word!==prevProps.word ||
+            this.props.occurenceNo!==prevProps.occurenceNo || this.props.char   !==prevProps.char  ){
+            console.log(this.props.totalPages    ===prevProps.totalPages   )
+            console.log("fdsfsdf12132")
+            this.updateState()
+        }if((this.props.totalPages!==prevProps.totalPages || this.props.skip!==prevProps.skip ) && (this.state.start!==prevState.start || this.state.end !==prevState.end )){
+            console.log("fdsfsdf")
+            this.updateState()
+        }
+        return true
+    }
+    updateState = ()=>{
+        this.setState({
+            totalPages:this.props.totalPages || 100,
+            skip:this.props.skip || 10,
+            word: this.props.word,
+                start: this.props.totalPages > 0 ? 1 : 1,
+                end : ((this.props.totalPages || 10) > (this.props.skip || 5) ?  this.props.skip : this.props.totalPages) || 10,
             occurenceNo : this.props.occurenceNo || 1,
             char : this.props.repeatingChar || this.props.word[0]
         })
@@ -41,7 +63,7 @@ class LetterPaginator extends React.Component{
         this.setState({
             active: r
         })
-        this.props.clicked(r-1)
+        this.props.clicked(r)
     }
 
     render(){
@@ -68,11 +90,12 @@ class LetterPaginator extends React.Component{
         const word = this.state.word
         const cursorStart = start === 1 ? 'not-allowed':'pointer'
         const cursorEnd = this.state.end === this.state.totalPages ? 'not-allowed':'pointer'
+        const margin = this.props.margin || "8px"
         items = [<span onClick={this.toFirst} className={classes.dleft} key= "fastRight"><center>&#10216;&#10216;</center></span> ]
         items.push(<span className={classes.left} key= "right" onClick={this.decrementFunction} style={{cursor:cursorStart}} ><center>&#10216;</center></span>)
         word.split("").forEach((letter,index)=>{
             if (letter === char && flag ===  occurenceNo){
-                flag =0;
+            
                 console.log(start,end)
                 for(let i =start ;i<=end;i++){
                     let attachedclass = [classes.pletter]
@@ -80,14 +103,20 @@ class LetterPaginator extends React.Component{
                         attachedclass = [classes.pletter,classes.active]
                     }
                     items.push(<span className={classes.item} key={'c'+i} onClick={()=>this.paginationHandler(i)}>
-                                    <span className={attachedclass.join(' ')}>{letter}</span>
-                                    <span className={classes.pnumber}>{i}</span>
+                                    <span className={attachedclass.join(' ')} style={{"marginLeft":margin,"marginRight":margin}}>{letter}</span>
+                                    <span className={classes.pnumber} style={{"marginLeft":margin,"marginRight":margin}}>{i}</span>
                                 </span>)
+                                flag = flag +1 
                     }
                 }else{
-                    if (letter === char ){ flag = flag +1 }
+                    if (letter === char ){ 
+                        if (flag !== occurenceNo){
+                            items.push(<span key={'L'+index} className={classes.letter}>{letter}</span>)
+                        }
+                        flag = flag +1 
+                    }
                     else {
-                        items.push(<span key={'L'+index} className={classes.letter}>{letter}</span>)
+                        items.push(<span key={'M'+index} className={classes.letter}>{letter}</span>)
                     }
                 }
                 })
