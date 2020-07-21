@@ -82,8 +82,9 @@ class IntegratePaginator extends Component{
         <hr/>
         Made By Tarang Khetan<br/>
         Clone this Project:{"\xa0"}
-        <i class="fa fa-github" href="https://github.com/tarang75490/GooglePaginator" style={{fontSize:"200%"}}></i><br/>
-        
+        <a href="https://github.com/tarang75490/GooglePaginator">
+        <i class="fa fa-github"  style={{fontSize:"200%",color:"black"}}></i><br/>
+        </a>
         </div>
         </React.Fragment>
         )
