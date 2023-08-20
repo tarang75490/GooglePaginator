@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/GooglePaginator/static/css/main.351297ad.css",
+    "main.js": "/GooglePaginator/static/js/main.6ecfc9df.js",
+    "index.html": "/GooglePaginator/index.html",
+    "main.351297ad.css.map": "/GooglePaginator/static/css/main.351297ad.css.map",
+    "main.6ecfc9df.js.map": "/GooglePaginator/static/js/main.6ecfc9df.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.351297ad.css",
+    "static/js/main.6ecfc9df.js"
+  ]
+}
